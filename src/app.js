@@ -9,13 +9,13 @@ const logger = require('koa-logger')
 const index = require('./routes/index')
 const users = require('./routes/users')
 
-// error handler:監聽錯誤.頁面顯示錯誤訊息
+// error handler:監聽錯誤.頁面顯示錯誤訊息.若路由沒傳ejs所需變數就會報錯
 onerror(app)
 
 // middlewares
 // 解析post數據 start
 app.use(bodyparser({
-  enableTypes:['json', 'form', 'text']
+  enableTypes: ['json', 'form', 'text']
 }))
 app.use(json())
 // 解析post數據end
