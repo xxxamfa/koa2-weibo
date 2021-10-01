@@ -4,7 +4,9 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+// 路口文件或啟動文件(通常為app.js或index.js)
+var app = require('../src/app');
+// console.log進階版
 var debug = require('debug')('demo:server');
 var http = require('http');
 

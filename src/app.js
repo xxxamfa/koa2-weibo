@@ -9,34 +9,39 @@ const logger = require('koa-logger')
 const index = require('./routes/index')
 const users = require('./routes/users')
 
-// error handler
+// error handler:監聽錯誤.頁面顯示錯誤訊息
 onerror(app)
 
 // middlewares
+// 解析post數據 start
 app.use(bodyparser({
   enableTypes:['json', 'form', 'text']
 }))
 app.use(json())
-app.use(logger())
-app.use(require('koa-static')(__dirname + '/public'))
+// 解析post數據end
 
+// 日誌功能
+app.use(logger())
+// 讓此路徑的資料可用url訪問
+app.use(require('koa-static')(__dirname + '/public'))
+// 註冊ejs
 app.use(views(__dirname + '/views', {
   extension: 'ejs'
 }))
 
-// logger
-app.use(async (ctx, next) => {
-  const start = new Date()
-  await next()
-  const ms = new Date() - start
-  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
-})
+// logger 演示而已
+// app.use(async (ctx, next) => {
+//   const start = new Date()
+//   await next()
+//   const ms = new Date() - start
+//   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
+// })
 
-// routes
+// 註冊routes
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 
-// error-handling
+// error-handling:打印錯誤訊息
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)
 });
