@@ -12,4 +12,10 @@ router.get('/bar', function (ctx, next) {
   ctx.body = 'this is a users/bar response'
 })
 
+router.post('/login', async (ctx, next) => {
+  // 注意!ctx.body已被用來當回傳.取得請求body需用ctx.request.body
+  const { userName, password } = ctx.request.body
+  ctx.body = { userName, password }
+})
+
 module.exports = router
