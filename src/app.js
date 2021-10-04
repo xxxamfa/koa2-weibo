@@ -5,6 +5,10 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
+const session = require('koa-generic-session')
+const redisStore = require('koa-redis')
+
+const { REDIS_CONF } = require('./conf/db')
 
 const index = require('./routes/index')
 const users = require('./routes/users')
@@ -27,6 +31,24 @@ app.use(require('koa-static')(__dirname + '/public'))
 // 註冊ejs
 app.use(views(__dirname + '/views', {
   extension: 'ejs'
+}))
+
+// session 配置
+// 這樣用戶每次訪問就會創建
+app.keys = ['UIsdf_7878#$']  //密鑰
+app.use(session({
+    key: 'weibo.sid', // cookie name 默认是 `koa.sid`
+    prefix: 'weibo:sess:', // redis key 的前缀，默认是 `koa:sess:`
+    cookie: {
+        path: '/',   //在網頁所有地方都能用
+        httpOnly: true,   // 不可修改cookie
+        maxAge: 24 * 60 * 60 * 1000  // 過期時間 . 单位 ms
+    },
+    // redis過期時間 . 不用寫默認與cookie.maxAge一致
+    // ttl: 24 * 60 * 60 * 1000,
+    store: redisStore({
+        all: `${REDIS_CONF.host}:${REDIS_CONF.port}`
+    })
 }))
 
 // logger 演示而已

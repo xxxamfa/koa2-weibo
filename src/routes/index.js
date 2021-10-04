@@ -22,8 +22,16 @@ router.get('/', async (ctx, next) => {
 })
 // 顯示json
 router.get('/json', async (ctx, next) => {
+  // 這裡的session登入者的session非session集合
+  const session = ctx.session
+  if (session.viewNum == null) {
+    session.viewNum = 0
+  }
+  session.viewNum++
+
   ctx.body = {
-    title: 'koa2 json'
+    title: 'koa2 json',
+    viewNum: session.viewNum
   }
 })
 // 解析一個參數
