@@ -19,7 +19,7 @@ onerror(app)
 // middlewares
 // 解析post數據 start
 app.use(bodyparser({
-  enableTypes: ['json', 'form', 'text']
+    enableTypes: ['json', 'form', 'text']
 }))
 app.use(json())
 // 解析post數據end
@@ -30,7 +30,7 @@ app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
 // 註冊ejs
 app.use(views(__dirname + '/views', {
-  extension: 'ejs'
+    extension: 'ejs'
 }))
 
 // session 配置
@@ -65,7 +65,7 @@ app.use(users.routes(), users.allowedMethods())
 
 // error-handling:打印錯誤訊息
 app.on('error', (err, ctx) => {
-  console.error('server error', err, ctx)
-});
+    console.error('server error', err, ctx)
+})
 
 module.exports = app
