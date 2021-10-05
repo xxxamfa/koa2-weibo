@@ -1,9 +1,6 @@
 const router = require('koa-router')()
 //結合js
 router.get('/', async (ctx, next) => {
-    console.log('before debugger')
-    debugger
-    console.log('after debugger')
     await ctx.render('index', {
         title: 'Hello Koa 2!',
         isMe: false,
@@ -31,7 +28,8 @@ router.get('/json', async (ctx, next) => {
         session.viewNum = 0
     }
     session.viewNum++
-
+    // 模擬報錯
+    throw Error()
     ctx.body = {
         title: 'koa2 json',
         viewNum: session.viewNum

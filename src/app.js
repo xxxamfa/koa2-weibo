@@ -10,11 +10,24 @@ const redisStore = require('koa-redis')
 
 const { REDIS_CONF } = require('./conf/db')
 
+const { isProd } = require('./utils/env')
 const index = require('./routes/index')
 const users = require('./routes/users')
 
+// 路由
+const errorViewRouter = require('./routes/view/error')
+
 // error handler:監聽錯誤.頁面顯示錯誤訊息.若路由沒傳ejs所需變數就會報錯
-onerror(app)
+// 設置錯誤跳轉
+let onerrorConf = {}
+// 線上環境再跳錯誤頁 . dev環境直接報錯誤訊息才好debug
+if (isProd) {
+    onerrorConf = {
+        // 設置錯誤跳轉路由位置
+        redirect: '/error'
+    }
+}
+onerror(app, onerrorConf)
 
 // middlewares
 // 解析post數據 start
@@ -62,6 +75,7 @@ app.use(session({
 // 註冊routes
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
+app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods()) // 404 路由注册到最后面
 
 // error-handling:打印錯誤訊息
 app.on('error', (err, ctx) => {
