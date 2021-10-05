@@ -5,11 +5,13 @@
 
 const { isProd } = require('../utils/env')
 
+// REDIS dev環境
 let REDIS_CONF = {
     port: 6379,
     host: '127.0.0.1'
 }
 
+// mysql dev環境
 let MYSQL_CONF = {
     host: 'localhost',
     user: 'root',
