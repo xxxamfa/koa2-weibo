@@ -8,8 +8,8 @@ const logger = require('koa-logger')
 const session = require('koa-generic-session')
 const redisStore = require('koa-redis')
 const jwtKoa = require('koa-jwt')
-
 const { REDIS_CONF } = require('./conf/db')
+// jwt密鑰
 const { SECRET } = require('./conf/constants.js')
 
 const { isProd } = require('./utils/env')
@@ -31,7 +31,7 @@ if (isProd) {
 }
 onerror(app, onerrorConf)
 
-// jwt驗證
+// 驗證header有無jwt
 app.use(jwtKoa({
     // 設定密鑰
     secret: SECRET
