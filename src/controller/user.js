@@ -1,5 +1,5 @@
 /**
- * @description user controller
+ * @description user controller : 把從前端撈到的資料在這處理
  * @author 双越老师
  */
 
@@ -40,31 +40,33 @@ async function isExist(userName) {
     }
 }
 
-// /**
-//  * 注册
-//  * @param {string} userName 用户名
-//  * @param {string} password 密码
-//  * @param {number} gender 性别（1 男，2 女，3 保密）
-//  */
-// async function register({ userName, password, gender }) {
-//     const userInfo = await getUserInfo(userName)
-//     if (userInfo) {
-//         // 用户名已存在
-//         return new ErrorModel(registerUserNameExistInfo)
-//     }
-
-//     try {
-//         await createUser({
-//             userName,
-//             password: doCrypto(password),
-//             gender
-//         })
-//         return new SuccessModel()
-//     } catch (ex) {
-//         console.error(ex.message, ex.stack)
-//         return new ErrorModel(registerFailInfo)
-//     }
-// }
+/**
+ * 注册
+ * @param {string} userName 用户名
+ * @param {string} password 密码
+ * @param {number} gender 性别（1 男，2 女，3 保密）
+ */
+async function register({ userName, password, gender }) {
+    const userInfo = await getUserInfo(userName)
+    if (userInfo) {
+        // 用户名已存在
+        return new ErrorModel(registerUserNameExistInfo)
+    }
+    // 創建數據用try catch包起
+    try {
+        await createUser({
+            userName,
+            password,
+            // password: doCrypto(password),
+            gender
+        })
+        return new SuccessModel()
+    } catch (ex) {
+        // 錯誤日誌會用到
+        console.error(ex.message, ex.stack)
+        return new ErrorModel(registerFailInfo)
+    }
+}
 
 // /**
 //  * 登录
@@ -171,7 +173,7 @@ async function isExist(userName) {
 
 module.exports = {
     isExist,
-    // register,
+    register,
     // login,
     // deleteCurUser,
     // changeInfo,
