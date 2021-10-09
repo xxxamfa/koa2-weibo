@@ -3,7 +3,7 @@
  */
 const seq = require('./seq')
 
-// require('./model')
+require('./model/index')
 
 // 測試連結 . 回傳為promise
 seq.authenticate().then(() => {
