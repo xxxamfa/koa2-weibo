@@ -18,6 +18,7 @@ const users = require('./routes/users')
 
 // 路由
 const userViewRouter = require('./routes/view/user')
+const userAPIRouter = require('./routes/api/user')
 const errorViewRouter = require('./routes/view/error')
 
 // error handler:監聽錯誤.頁面顯示錯誤訊息.若路由沒傳ejs所需變數就會報錯
@@ -87,6 +88,7 @@ app.use(session({
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(userViewRouter.routes(), userViewRouter.allowedMethods())
+app.use(userAPIRouter.routes(), userAPIRouter.allowedMethods())
 app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods()) // 404 路由注册到最后面
 
 // error-handling:打印錯誤訊息
