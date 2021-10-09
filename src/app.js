@@ -7,8 +7,10 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const session = require('koa-generic-session')
 const redisStore = require('koa-redis')
+const jwtKoa = require('koa-jwt')
 
 const { REDIS_CONF } = require('./conf/db')
+const { SECRET } = require('./conf/constants.js')
 
 const { isProd } = require('./utils/env')
 const index = require('./routes/index')
@@ -28,6 +30,14 @@ if (isProd) {
     }
 }
 onerror(app, onerrorConf)
+
+// jwt驗證
+app.use(jwtKoa({
+    // 設定密鑰
+    secret: SECRET
+}).unless({
+    path:[/^\/users\/login/]  //自定義哪些路由不用jwt驗證
+}))
 
 // middlewares
 // 解析post數據 start
