@@ -29,7 +29,7 @@ router.get('/json', async (ctx, next) => {
     }
     session.viewNum++
     // 模擬報錯
-    throw Error()
+    // throw Error()
     ctx.body = {
         title: 'koa2 json',
         viewNum: session.viewNum
