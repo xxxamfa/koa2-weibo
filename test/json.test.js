@@ -1,5 +1,5 @@
 const { TestWatcher } = require('@jest/core')
-const server = require('./servre')
+const server = require('./server')
 
 test('json接口返回正確', async () => {
     const res = await server.get('/json')

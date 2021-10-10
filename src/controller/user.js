@@ -89,19 +89,19 @@ async function login(ctx, userName, password) {
     return new SuccessModel()
 }
 
-// /**
-//  * 删除当前用户
-//  * @param {string} userName 用户名
-//  */
-// async function deleteCurUser(userName) {
-//     const result = await deleteUser(userName)
-//     if (result) {
-//         // 成功
-//         return new SuccessModel()
-//     }
-//     // 失败
-//     return new ErrorModel(deleteUserFailInfo)
-// }
+/**
+ * 删除当前用户
+ * @param {string} userName 用户名
+ */
+async function deleteCurUser(userName) {
+    const result = await deleteUser(userName)
+    if (result) {
+        // 成功
+        return new SuccessModel()
+    }
+    // 失败
+    return new ErrorModel(deleteUserFailInfo)
+}
 
 // /**
 //  * 修改个人信息
@@ -175,7 +175,7 @@ module.exports = {
     isExist,
     register,
     login,
-    // deleteCurUser,
+    deleteCurUser,
     // changeInfo,
     // changePassword,
     // logout

@@ -8,14 +8,14 @@ const {
     isExist,
     register,
     login,
-    // deleteCurUser,
+    deleteCurUser,
     // changeInfo,
     // changePassword,
     // logout
 } = require('../../controller/user')
 const userValidate = require('../../validator/user')
 const { genValidator } = require('../../middlewares/validator')
-// const { isTest } = require('../../utils/env')
+const { isTest } = require('../../utils/env')
 // const { loginCheck } = require('../../middlewares/loginChecks')
 // const { getFollowers } = require('../../controller/user-relation')
 
@@ -54,14 +54,14 @@ router.post('/login', async (ctx, next) => {
     ctx.body = await login(ctx, userName, password)
 })
 
-// // 删除
-// router.post('/delete', loginCheck, async (ctx, next) => {
-//     if (isTest) {
-//         // 测试环境下，测试账号登录之后，删除自己
-//         const { userName } = ctx.session.userInfo
-//         ctx.body = await deleteCurUser(userName)
-//     }
-// })
+// 删除 - 為了單元測試用
+router.post('/delete', async (ctx, next) => {
+    if (isTest) {
+        // 测试环境下，测试账号登录之后，删除自己
+        const { userName } = ctx.session.userInfo
+        ctx.body = await deleteCurUser(userName)
+    }
+})
 
 // // 修改个人信息
 // router.patch('/changeInfo', loginCheck, genValidator(userValidate), async (ctx, next) => {
