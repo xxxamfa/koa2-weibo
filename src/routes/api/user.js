@@ -7,7 +7,7 @@ const router = require('koa-router')()
 const {
     isExist,
     register,
-    // login,
+    login,
     // deleteCurUser,
     // changeInfo,
     // changePassword,
@@ -48,11 +48,11 @@ router.post('/isExist', async (ctx, next) => {
     ctx.body = await isExist(userName)
 })
 
-// // 登录
-// router.post('/login', async (ctx, next) => {
-//     const { userName, password } = ctx.request.body
-//     ctx.body = await login(ctx, userName, password)
-// })
+// 登录
+router.post('/login', async (ctx, next) => {
+    const { userName, password } = ctx.request.body
+    ctx.body = await login(ctx, userName, password)
+})
 
 // // 删除
 // router.post('/delete', loginCheck, async (ctx, next) => {
