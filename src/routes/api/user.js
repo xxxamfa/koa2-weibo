@@ -13,8 +13,8 @@ const {
     // changePassword,
     // logout
 } = require('../../controller/user')
-// const userValidate = require('../../validator/user')
-// const { genValidator } = require('../../middlewares/validator')
+const userValidate = require('../../validator/user')
+const { genValidator } = require('../../middlewares/validator')
 // const { isTest } = require('../../utils/env')
 // const { loginCheck } = require('../../middlewares/loginChecks')
 // const { getFollowers } = require('../../controller/user-relation')
@@ -22,15 +22,10 @@ const {
 router.prefix('/api/user')
 
 // 注册路由
-router.post('/register', async (ctx, next) => {
-    const { userName, password, gender } = ctx.request.body
-    ctx.body = await register({
-        userName,
-        password,
-        gender
-    })
-})
-// router.post('/register', genValidator(userValidate), async (ctx, next) => {
+// router.post('/register',async (ctx, next) => {
+//     // 校驗
+//     userValidate(ctx.request.body)
+// }, async (ctx, next) => {
 //     const { userName, password, gender } = ctx.request.body
 //     ctx.body = await register({
 //         userName,
@@ -38,6 +33,14 @@ router.post('/register', async (ctx, next) => {
 //         gender
 //     })
 // })
+router.post('/register', genValidator(userValidate), async (ctx, next) => {
+    const { userName, password, gender } = ctx.request.body
+    ctx.body = await register({
+        userName,
+        password,
+        gender
+    })
+})
 
 // 用户名是否存在
 router.post('/isExist', async (ctx, next) => {
