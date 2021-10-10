@@ -15,7 +15,7 @@ const { SECRET } = require('./conf/constants.js')
 const { isProd } = require('./utils/env')
 const index = require('./routes/index')
 const users = require('./routes/users')
-
+const { SESSION_SECRET_KEY } = require('./conf/secretKeys')
 // 路由
 const userViewRouter = require('./routes/view/user')
 const userAPIRouter = require('./routes/api/user')
@@ -60,7 +60,7 @@ app.use(views(__dirname + '/views', {
 
 // session 配置
 // 這樣用戶每次訪問就會創建
-app.keys = ['UIsdf_7878#$']  //密鑰
+app.keys = [SESSION_SECRET_KEY]  //密鑰
 app.use(session({
     key: 'weibo.sid', // cookie name 默认是 `koa.sid`
     prefix: 'weibo:sess:', // redis key 的前缀，默认是 `koa:sess:`
